@@ -5,10 +5,16 @@ my_secret_pas = os.environ['PASSWORD']
 
 server = smtplib.SMTP_SSL('smtp.yandex.ru:465')
 
-text = """From: nick1tapinyagin@yandex.ru
-To: nick1tapinyagin@yandex.ru
+friend_name = 'Леонид'
+my_name = 'Никита'
+sender_email = 'nick1tapinyagin@yandex.ru'
+recipient_email = 'stol.leonid.ya@yandex.ru'
+text = F"""From: {sender_email}
+To: {recipient_email}
 Subject: Приглашение!
 Content-Type: text/plain; charset="UTF-8";
+
+
 Привет, %friend_name%! %my_name% приглашает тебя на сайт %website%!
 
 %website% — это новая версия онлайн-курса по программированию. 
@@ -27,8 +33,7 @@ Content-Type: text/plain; charset="UTF-8";
 На курсы, которые еще не вышли, можно подписаться и получить уведомление о релизе сразу на имейл."""
 
 website='https://dvmn.org/referrals/I8wtSY8wzbS3X0nCcFcYSeGVpJq6OAO8rZQhxfoU/'
-friend_name = 'Леонид'
-my_name = 'Никита'
+
 
 text=text.replace('%website%',website)
 text = text.replace('%friend_name%',friend_name)
@@ -37,5 +42,5 @@ text = text.replace('%my_name%',my_name)
 text = text.encode("UTF-8")
 
 server.login(my_secret_log, my_secret_pas)
-server.sendmail('nick1tapinyagin@yandex.ru', 'nick1tapinyagin@yandex.ru', text)
+server.sendmail(sender_email, recipient_email, text)
 server.quit()
